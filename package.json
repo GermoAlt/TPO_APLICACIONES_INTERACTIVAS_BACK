@@ -1,0 +1,24 @@
+{
+  "name": "tpo_aplicaciones_interactivas_back",
+  "version": "1.0.0",
+  "description": "TPO_APLICACIONES_INTERACTIVAS_BACK",
+  "main": "main.js",
+  "scripts": {
+    "test": "test",
+    "start": "node src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_BACK.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_BACK/issues"
+  },
+  "homepage": "https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_BACK#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.3.1"
+  }
+}
