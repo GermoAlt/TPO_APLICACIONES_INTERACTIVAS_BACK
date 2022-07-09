@@ -7,5 +7,11 @@ module.exports = {
         "NORMAL_USER": 1,
         "PAID_USER": 4,
         "ADMIN": 2048
-    }
+    },
+    "URI": "mongodb://",
+    "HOST":"localhost",
+    "PORTDB":27017,
+    "DATABASE": "recetas",
+
+    "SECRET":"secret"
 };

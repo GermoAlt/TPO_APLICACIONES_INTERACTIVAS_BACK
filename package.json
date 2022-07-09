@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_BACK#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
     "express": "^4.17.3",
-    "mongoose": "^6.3.1"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.1",
+    "mongoose-paginate": "^5.0.3",
+    "nodemailer": "^6.7.5"
   }
 }

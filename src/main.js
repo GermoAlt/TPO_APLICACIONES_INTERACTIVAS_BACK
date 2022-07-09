@@ -1,6 +1,8 @@
 const config = require('./config/env.config.js')
+const bluebird = require('bluebird');
 
 const express = require('express');
+const routes = require('./routes/userRoute')
 const app = express();
 
 app.use(function (req, res, next) {
@@ -21,3 +23,26 @@ app.use(express.json());
 app.listen(config.port, function () {
     console.log('app listening at port %s', config.port);
 });
+
+
+//Database
+const mongoose = require('mongoose');
+mongoose.Promise = bluebird;
+let url = `${config.URI}${config.HOST}:${config.PORTDB}/${config.DATABASE}`
+console.log("BD",url);
+let opts = {
+    useNewUrlParser : true,
+    connectTimeoutMS:20000,
+    useUnifiedTopology: true
+};
+
+mongoose.connect(url,opts)
+    .then(() => {
+        console.log(`Succesfully Connected to theMongodb Database..`)
+    })
+    .catch((e) => {
+        console.log(`Error Connecting to the Mongodb Database...`),
+            console.log(e)
+    })
+
+app.use('/', routes)
