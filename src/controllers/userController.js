@@ -17,7 +17,7 @@ exports.testPepe = async function (req, res){
 
 exports.nuevoUser = async function (req, res) {
     const User = {
-        name: req.body.name,
+        nombre: req.body.nombre,
         email: req.body.email,
         password: req.body.password,
         telefono: req.body.telefono

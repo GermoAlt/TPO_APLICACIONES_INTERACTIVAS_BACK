@@ -43,7 +43,7 @@ exports.nuevoUser = async function (user) {
     const hashedPassword = bcrypt.hashSync(user.password, 8);
 
     const newUser = new User({
-        name: user.name,
+        nombre: user.nombre,
         email: user.email,
         date: new Date(),
         password: hashedPassword
