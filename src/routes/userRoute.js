@@ -9,7 +9,7 @@ router.get('/test',function(req, res) {
 })
 router.post('/test-post', UserController.testPepe)
 
-router.post('/login/', UserController.login)
+router.post('/login', UserController.login)
 router.post('/registration', UserController.nuevoUser)
 router.get('/userById/:id', Authorization, UserController.getUserById)
 

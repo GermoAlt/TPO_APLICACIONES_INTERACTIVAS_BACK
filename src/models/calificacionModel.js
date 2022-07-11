@@ -16,7 +16,7 @@ const CalificacionSchema = new mongoose.Schema({
     comentario: String
 })
 
-CalificacionSchemaSchema.plugin(mongoosePaginate)
+CalificacionSchema.plugin(mongoosePaginate)
 
 const Calificacion = mongoose.model('Calificacion', CalificacionSchema)
 

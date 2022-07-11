@@ -10,7 +10,7 @@ exports.testPepe = async function (req, res){
         return res.status(200).json({message:"Post ok"})
     }catch (e){
         console.log(e)
-        return  res.status(400).json({status: 400, message:"Error con db"})
+        return  res.status(401).json({status: 400, message:"Error con db"})
     }
 
 }
@@ -19,7 +19,8 @@ exports.nuevoUser = async function (req, res) {
     const User = {
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        telefono: req.body.telefono
     };
     try {
         const createdUser = await UserService.nuevoUser(User);
@@ -39,7 +40,7 @@ exports.login = async function (req, res) {
         const loginUser = await UserService.login(User);
         return res.status(200).json({loginUser, message: "Login ok"});
     } catch (e) {
-        return res.status(400).json({status: 400, message: "Username o password incorrecto"});
+        return res.status(401).json({status: 401, message: "Username o password incorrecto"});
     }
 }
 
