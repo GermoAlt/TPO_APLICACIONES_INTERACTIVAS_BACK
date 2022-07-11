@@ -3,7 +3,7 @@ const cors = require('cors')
 const bluebird = require('bluebird');
 
 const express = require('express');
-const routes = require('./routes/userRoute')
+const routes = require('./routes/mainRouter')
 const app = express();
 
 app.use(function (req, res, next) {
