@@ -1,10 +1,11 @@
 const Recipe = require('../models/recetaModel');
 const cloudinary = require('cloudinary')
+const config = require('../config/env.config');
 
-cloudinary.config({
-    cloud_name: '', // Complete
-    api_key: '', // Complete
-    api_secret: '' // Complete
+cloudinary.config({ // Add cloudinary keys locally to config file
+    cloud_name: config.CLOUD_NAME,
+    api_key: config.API_KEY,
+    api_secret: config.API_SECRET
 })
 
 exports.listRecipes = async () => {
@@ -48,9 +49,10 @@ exports.deleteRecipe = async () => {
 exports.newImage = async (uploadStr) => {
     try{
         let uploadResult = await cloudinary.v2.uploader.upload(uploadStr, {
+            folder: 'recetas/receta',
             overwrite: true,
             invalidate: true,
-            width: 810, height: 456, crop: "fill"
+            width: 965, height: 643, crop: "fill"
         })
         return uploadResult;
     }
