@@ -11,7 +11,13 @@ exports.getRecipes = async (req,res) => {
 }
 
 exports.getRecipeById = async (req,res) => {
-
+    try {
+        const recipe = await RecipeService.findRecipeById(req.params.id);
+        return res.status(200).json({recipe, message: "Receta obtenida con éxito"});
+    } catch (err) {
+        console.log("Error: " + err);
+        return res.status(400).json({status: 400, message: "Error al obtener receta"});
+    }
 }
 
 exports.getRecipesByUser = async (req,res) => {
@@ -32,6 +38,7 @@ exports.createRecipe = async (req,res) => {
             porciones: req.body.porciones,
             ingredientes: req.body.ingredientes, // array
             pasos: req.body.pasos, // array
+            estado: req.body.estado
         };
         const createdRecipe = await RecipeService.newRecipe(Recipe);
         return res.status(201).json({createdRecipe, message: "Se creó la receta: " + Recipe.titulo});

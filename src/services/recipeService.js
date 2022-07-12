@@ -10,7 +10,7 @@ cloudinary.config({ // Add cloudinary keys locally to config file
 
 exports.listRecipes = async () => {
     try{
-        const recipes = await Recipe.find({});
+        const recipes = await Recipe.find({"estado":"Publicado"});
         return recipes;
     }catch(err){
         console.log("Error: " + err);
@@ -18,15 +18,21 @@ exports.listRecipes = async () => {
     }
 }
 
-exports.findRecipeById = async () => {
-
+exports.findRecipeById = async (id) => {
+    try{
+        const recipes = await Recipe.findOne({"_id":id});
+        return recipes;
+    }catch(err){
+        console.log("Error: " + err);
+        throw Error("Error al obtener recetas")
+    }
 }
 
 exports.newRecipe = async (recipe) => {
     try{
         const newRecipe = new Recipe({
             ...recipe,
-            date: new Date()
+            date: new Date(),
         });
         let savedRecipe = await newRecipe.save()
         return savedRecipe;
