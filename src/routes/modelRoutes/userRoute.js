@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const UserController = require('../controllers/userController');
-const Authorization = require('../auth/authorization')
+const UserController = require('../../controllers/userController');
+const Authorization = require('../../auth/authorization')
 
+// This routes will be appended to "http://localhost:3600/users"
 
 router.get('/test',function(req, res) {
-    res.send('Test ok');
+    res.send('Test users ok');
 })
 router.post('/test-post', UserController.testPepe)
 

@@ -27,7 +27,8 @@ const RecetaSchema = new mongoose.Schema({
         orden: Number,
         paso: String
     }],
-    date: Date
+    date: Date,
+    estado: String
 });
 
 RecetaSchema.plugin(mongoosePaginate)
