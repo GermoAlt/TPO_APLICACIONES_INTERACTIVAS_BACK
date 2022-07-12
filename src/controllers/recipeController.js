@@ -21,7 +21,13 @@ exports.getRecipeById = async (req,res) => {
 }
 
 exports.getRecipesByUser = async (req,res) => {
-
+    try {
+        const recipes = await RecipeService.findRecipeByUserId(req.params.userId);
+        return res.status(200).json({recipes, message: "Recetas obtenidas con éxito"});
+    } catch (err) {
+        console.log("Error: " + err);
+        return res.status(400).json({status: 400, message: "Error al obtener recetas"});
+    }
 }
 
 exports.createRecipe = async (req,res) => {
@@ -48,12 +54,24 @@ exports.createRecipe = async (req,res) => {
     }
 }
 
-exports.updateRecipe = (req,res) => {
-
+exports.updateRecipe = async (req,res) => {
+    try {
+        const recipe = await RecipeService.updateRecipe(req.params.id,{...req.body});
+        return res.status(200).json({recipe, message: "Receta actualizada con éxito"});
+    } catch (err) {
+        console.log("Error: " + err);
+        return res.status(400).json({status: 400, message: "Error al actualizar receta"});
+    }
 }
 
 exports.deleteRecipe = async (req,res) => {
-
+    try {
+        const result = await RecipeService.deleteRecipe(req.params.id);
+        return res.status(200).json({result, message: "Receta eliminada con éxito"});
+    } catch (err) {
+        console.log("Error: " + err);
+        return res.status(400).json({status: 400, message: "Error al eliminar receta"});
+    }
 }
 
 exports.uploadImage = async (req,res) => {
