@@ -20,7 +20,9 @@ exports.nuevoUser = async function (req, res) {
         nombre: req.body.nombre,
         email: req.body.email,
         password: req.body.password,
-        telefono: req.body.telefono
+        telefono: req.body.telefono,
+        idFoto: req.body.idFoto,
+        recetas: Array
     };
     try {
         const createdUser = await UserService.nuevoUser(User);
@@ -51,5 +53,25 @@ exports.getUserById = async function (req, res) {
         res.status(200).send("User encontrado");
     } catch (e) {
         return res.status(400).json({status: 400, message: e.message})
+    }
+}
+
+exports.updateUser = async function (req, res) {
+    if (!req.body.nombre) {
+        return res.status(400).json({status: 400., message: "Name be present"})
+    }
+    let User = {
+        nombre: req.body.nombre ? req.body.nombre : null,
+        email: req.body.email ? req.body.email : null,
+        password: req.body.password ? req.body.password : null,
+        telefono: req.body.telefono ? req.body.telefono :null,
+        idFoto: req.body.idFoto ? req.body.idFoto : null,
+        recetas: req.b.recetas ? req.body.recetas : null
+    }
+    try {
+        let updatedUser = await UserService.updateUser(User)
+            return res.status(200).json({status: 200, data: updatedUser, message: "Usuario actualizado correctamente"})
+    } catch (e) {
+        return res.status(400).json({status: 400., message: e.message})
     }
 }

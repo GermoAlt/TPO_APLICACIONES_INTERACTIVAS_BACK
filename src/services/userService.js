@@ -73,6 +73,33 @@ exports.findById = async function (id) {
         }
         return user;
     } catch (e) {
-        throw Error("Error buscando el user con id: " + id)
+        throw Error("Error buscando el user: " + e.message)
+    }
+}
+
+exports.updateUser = async function (user) {
+    let id = {
+        email: user.email
+    }
+    try {
+        var userEncontrado = await User.findOne(id);
+    } catch (e) {
+        throw Error("Error buscan el user: " + e.message)
+        return false;
+    }
+
+    let hashedPassword = bcrypt.hashSync(user.password, 8);
+    userEncontrado.name = user.name
+    userEncontrado.email = user.email
+    userEncontrado.password = hashedPassword
+    userEncontrado.telefono = user.telefono
+    userEncontrado.idFoto =  user.idFoto
+    userEncontrado.recetas = user.recetas
+    userEncontrado.date = new Date()
+    try {
+        let savedUser = await userEncontrado.save()
+        return savedUser;
+    } catch (e) {
+        throw Error("Error guardando el user: " + e.message);
     }
 }

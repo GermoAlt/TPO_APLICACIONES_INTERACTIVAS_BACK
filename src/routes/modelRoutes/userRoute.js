@@ -12,9 +12,11 @@ router.post('/test-post', UserController.testPepe)
 
 router.post('/login', UserController.login)
 router.post('/registration', UserController.nuevoUser)
-router.get('/userById/:id', Authorization, UserController.getUserById)
+router.get('/userById/:id', UserController.getUserById)
+router.put('/update', UserController.updateUser)
 
-// router.put('/', Authorization, UserController.updateUser)
+//continuar con guardar imagen de usuario y enviar email de reset password.
+
 // router.post('/guardarImgUser',UserController.guardarImagenUser)
 // router.post('/uploadImg',UploadController.uploadFilesImgUser);
 // router.post('/imgUserByMail',Authorization,UserController.getImagenUserByMail)

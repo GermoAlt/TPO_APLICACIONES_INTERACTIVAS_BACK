@@ -28,6 +28,7 @@ const RecetaSchema = new mongoose.Schema({
         paso: String
     }],
     date: Date,
+    rating: Array,
     estado: String
 });
 
