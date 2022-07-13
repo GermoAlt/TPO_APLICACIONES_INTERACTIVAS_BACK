@@ -81,8 +81,11 @@ exports.updateUser = async function (req, res) {
 exports.reset = async (req,res) => { // received email => checks for existace, saves token, and sends mail
     try {
         const targetUser = await UserService.findUserByEmail(req.body.email);
-        if(targetUser === {}){
+        /*if(targetUser === {}){
             return res.status(404).json({status: 404, message: "No se encontró al usuario"});
+        }*/
+        if(targetUser === {}){
+            return res.status(200).json({status: 200, message: "Request aceptada, pero no inmuta al sistema"});
         }
         const updatedTokenAction = await UserService.updateUserToken(targetUser,req.body.token)
         const emailActionInfo = await UserService.sendEmail(req.body.email,req.body.token)
@@ -96,6 +99,9 @@ exports.reset = async (req,res) => { // received email => checks for existace, s
 exports.validateUserToken = async (req,res) => { // Checks if there's a user with provided token, and returns it
     try{
         let user = await UserService.findUserWithToken(req.body.token)
+        if(user === {}){
+            return res.status(401).json({user, message: "No se encontró al usuario con token " + req.body.token});
+        }
         return res.status(200).json({user, message: "Se encontró al usuario con token " + user.token});
     }catch(err){
         console.log("Error: ", err);
@@ -105,6 +111,10 @@ exports.validateUserToken = async (req,res) => { // Checks if there's a user wit
 
 exports.updatePassword = async (req,res) => { // Updates user password, sets token as empty
     try{
+        let user = await UserService.findUserWithToken(req.body.user.token)
+        if(user._id !== req.body.user._id){
+            return res.status(401).json({user, message: "No se encontró al usuario con token " + req.body.token});
+        }
         let updateAction = await UserService.updateUserPassword(req.body.user);
         return res.status(200).json({updateAction, message: "Contraseña actualizada con éxito"});
     }catch(err){

@@ -144,7 +144,7 @@ exports.sendEmail = async (email,token) => {
             from: 'Gourmetic',
             to: email,
             subject: 'Recuperación de Cuenta',
-            text: 'Ingrese al siguiente link para recuperar su clave' + clickThroughUrl
+            text: 'Ingrese al siguiente link para recuperar su clave: ' + clickThroughUrl
         };
         transporter.sendMail(mailOptions, async function (error, info) {
             if (error) {
