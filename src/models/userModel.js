@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     telefono: String,
     idFoto: String,
     recetas: Array,
+    token: String,
     date: Date
 });
 

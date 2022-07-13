@@ -17,11 +17,12 @@ exports.testPepe = async function (req, res){
 
 exports.nuevoUser = async function (req, res) {
     const User = {
-        nombre: req.body.nombre,
-        email: req.body.email,
-        password: req.body.password,
-        telefono: req.body.telefono,
-        idFoto: req.body.idFoto,
+        nombre: req.body.nombre ? req.body.nombre : null,
+        email: req.body.email ? req.body.email : null,
+        password: req.body.password ? req.body.password : null,
+        telefono: req.body.telefono ? req.body.telefono :null,
+        idFoto: req.body.idFoto ? req.body.idFoto : null,
+        token: req.body.token ? req.body.token : null,
         recetas: Array
     };
     try {
@@ -50,7 +51,7 @@ exports.getUserById = async function (req, res) {
     const id = req.params.id;
     try {
         let user = await UserService.findById(id);
-        res.status(200).send("User encontrado");
+        res.status(200).json({user,message: "User encontrado"});
     } catch (e) {
         return res.status(400).json({status: 400, message: e.message})
     }
@@ -66,12 +67,48 @@ exports.updateUser = async function (req, res) {
         password: req.body.password ? req.body.password : null,
         telefono: req.body.telefono ? req.body.telefono :null,
         idFoto: req.body.idFoto ? req.body.idFoto : null,
-        recetas: req.b.recetas ? req.body.recetas : null
+        recetas: req.body.recetas ? req.body.recetas : null,
+        token: req.body.token ? req.body.token : null
     }
     try {
         let updatedUser = await UserService.updateUser(User)
             return res.status(200).json({status: 200, data: updatedUser, message: "Usuario actualizado correctamente"})
     } catch (e) {
         return res.status(400).json({status: 400., message: e.message})
+    }
+}
+
+exports.reset = async (req,res) => { // received email => checks for existace, saves token, and sends mail
+    try {
+        const targetUser = await UserService.findUserByEmail(req.body.email);
+        if(targetUser === {}){
+            return res.status(404).json({status: 404, message: "No se encontró al usuario"});
+        }
+        const updatedTokenAction = await UserService.updateUserToken(targetUser,req.body.token)
+        const emailActionInfo = await UserService.sendEmail(req.body.email,req.body.token)
+        return res.status(200).json({targetUser,emailActionInfo, message: "Se envio el mail al usuario: " + targetUser.email});
+    } catch (e) {
+        console.log("Error: ", e);
+        return res.status(400).json({status: 400, message: "Falló la recuperación de usuario"});
+    }
+}
+
+exports.validateUserToken = async (req,res) => { // Checks if there's a user with provided token, and returns it
+    try{
+        let user = await UserService.findUserWithToken(req.body.token)
+        return res.status(200).json({user, message: "Se encontró al usuario con token " + user.token});
+    }catch(err){
+        console.log("Error: ", err);
+        return res.status(400).json({status: 400, message: "Falló la autenticación del token (uuid: " + req.body.token + ")"});
+    }
+}
+
+exports.updatePassword = async (req,res) => { // Updates user password, sets token as empty
+    try{
+        let updateAction = await UserService.updateUserPassword(req.body.user);
+        return res.status(200).json({updateAction, message: "Contraseña actualizada con éxito"});
+    }catch(err){
+        console.log("Error: ", err);
+        return res.status(400).json({status: 400, message: "Falló la autenticación del token (uuid: " + req.body.token + ")"});
     }
 }

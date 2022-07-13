@@ -15,6 +15,10 @@ router.post('/registration', UserController.nuevoUser)
 router.get('/userById/:id', UserController.getUserById)
 router.put('/update', UserController.updateUser)
 
+router.post('/reset', UserController.reset);
+router.post('/usertoken', UserController.validateUserToken)
+router.post('/password', UserController.updatePassword)
+
 //continuar con guardar imagen de usuario y enviar email de reset password.
 
 // router.post('/guardarImgUser',UserController.guardarImagenUser)

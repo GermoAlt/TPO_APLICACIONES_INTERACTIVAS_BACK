@@ -2,7 +2,8 @@ const User = require('../models/userModel')
 const Prueba = require('../models/pruebaModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-
+const nodemailer = require('nodemailer');
+const config = require('./config/env.config.js')
 
 exports.crearPrueba = async function (prueba){
     const newPrueba = new Prueba({
@@ -101,5 +102,78 @@ exports.updateUser = async function (user) {
         return savedUser;
     } catch (e) {
         throw Error("Error guardando el user: " + e.message);
+    }
+}
+
+exports.findUserByEmail = async (email) => {
+    try{
+        let user = await User.findOne({"email": email});
+        return user;
+    }
+    catch(err){
+        throw Error("Error al buscar user por email: " + e.message);
+    }
+}
+
+exports.updateUserToken = async (user,token) => {
+    try{
+        const updateUserAction = await User.updateOne({"_id":user._id},{...user,"token":token});
+        return updateUserAction;
+    }catch(err){
+        console.log("Error: " + err);
+        throw Error("Error al actualizar token del usuario")
+    }
+}
+
+exports.sendEmail = async (email,token) => {
+    try{
+        let transporter = nodemailer.createTransport({
+            host: "smtp-mail.outlook.com", // hostname
+            port: 587, // port for secure SMTP
+            secureConnection: false,
+            tls: {
+                ciphers: 'SSLv3'
+            },
+            auth: {
+                user: config.EMAIL_USER,
+                pass: config.EMAIL_PASSWORD
+            }
+       });
+        let clickThroughUrl = "http://localhost:3000/reset?uuid="+ token;
+        var mailOptions = {
+            from: 'Gourmetic',
+            to: email,
+            subject: 'Recuperación de Cuenta',
+            text: 'Ingrese al siguiente link para recuperar su clave' + clickThroughUrl
+        };
+        transporter.sendMail(mailOptions, async function (error, info) {
+            if (error) {
+                throw Error("Error durante el envío del email: " + error.message);
+            } else {
+                console.log("Email enviado correctamente")
+                return info;
+            }
+       });
+    }
+    catch(err){
+        throw Error("Ocurrió un error al enviar email: " + error.message);
+    }
+}
+
+exports.findUserWithToken = async (token) => {
+    try{
+        let user = await User.findOne({"token": token})
+        return user;
+    }catch(err){
+        throw Error("Error al buscar usuario durante validación del token")
+    }
+}
+
+exports.updateUserPassword = (user,password) => {
+    try{
+        let updateAction = await User.updateOne({"_id": user._id},{...user,"token":"","password":password})
+        return updateAction;
+    }catch(err){
+        throw Error("Error al actualizar la contraseña del usuario")
     }
 }
