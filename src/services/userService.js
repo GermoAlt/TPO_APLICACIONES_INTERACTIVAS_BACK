@@ -3,7 +3,7 @@ const Prueba = require('../models/pruebaModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
-const config = require('./config/env.config.js')
+const config = require('../config/env.config.js')
 
 exports.crearPrueba = async function (prueba){
     const newPrueba = new Prueba({
@@ -169,7 +169,7 @@ exports.findUserWithToken = async (token) => {
     }
 }
 
-exports.updateUserPassword = (user,password) => {
+exports.updateUserPassword = async (user,password) => {
     try{
         let updateAction = await User.updateOne({"_id": user._id},{...user,"token":"","password":password})
         return updateAction;
