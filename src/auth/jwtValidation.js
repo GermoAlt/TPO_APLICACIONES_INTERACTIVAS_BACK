@@ -8,10 +8,9 @@ exports.checkToken = (req,res,next) => { // si todo va bien, hago next y voy al 
     }
 
     const userToken = req.headers['token'];
-    let payload;
 
     try{
-        payload = jwt.verify(userToken, config.SECRET)
+        let payload = jwt.verify(userToken, config.SECRET)
     }catch(err){
         return res.status(401).json({error : 'El token es inválido'});
     }
