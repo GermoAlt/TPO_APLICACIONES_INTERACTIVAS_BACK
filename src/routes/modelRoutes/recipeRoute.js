@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const RecipeController = require('../../controllers/recipeController');
+const jwtValidation = require('../../auth/jwtValidation')
 
 
 router.get('/test',function(req, res) {
@@ -12,10 +13,10 @@ router.get('/test',function(req, res) {
 router.get('/recipes', RecipeController.getRecipes)
 router.get('/recipe/:id', RecipeController.getRecipeById)
 router.get('/recipes/:userId',RecipeController.getRecipesByUser)
-router.post('/recipe', RecipeController.createRecipe)
-router.put('/recipe/:id', RecipeController.updateRecipe)
-router.delete('/recipe/:id', RecipeController.deleteRecipe)
+router.post('/recipe', jwtValidation.checkToken, RecipeController.createRecipe)
+router.put('/recipe/:id', jwtValidation.checkToken, RecipeController.updateRecipe)
+router.delete('/recipe/:id', jwtValidation.checkToken, RecipeController.deleteRecipe)
 
-router.post('/recipeImage',RecipeController.uploadImage)
+//router.post('/recipeImage', jwtValidation.checkToken, RecipeController.uploadImage)
 
 module.exports = router;

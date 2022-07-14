@@ -2,7 +2,8 @@ const User = require('../models/userModel')
 const Prueba = require('../models/pruebaModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-
+const nodemailer = require('nodemailer');
+const config = require('../config/env.config.js')
 
 exports.crearPrueba = async function (prueba){
     const newPrueba = new Prueba({
@@ -29,8 +30,8 @@ exports.login = async function (user) {
 
         let token = jwt.sign({
             id: detailsUser._id
-        }, process.env.SECRET, {
-            expiresIn: 10
+        }, config.SECRET, {
+            expiresIn: '1h'
         });
         return {token:token, user:detailsUser};
     } catch (e) {
@@ -51,10 +52,11 @@ exports.nuevoUser = async function (user) {
 
     try {
         const savedUser = await newUser.save();
+        console.log("usuario creado: ", savedUser);
         const token = jwt.sign({
             id: savedUser._id
-        }, process.env.SECRET, {
-            expiresIn: 10
+        }, config.SECRET, {
+            expiresIn: '1h'
         });
         return token;
     } catch (e) {
@@ -73,6 +75,110 @@ exports.findById = async function (id) {
         }
         return user;
     } catch (e) {
-        throw Error("Error buscando el user con id: " + id)
+        throw Error("Error buscando el user: " + e.message)
+    }
+}
+
+exports.updateUser = async function (user) {
+    let id = {
+        email: user.email
+    }
+    try {
+        var userEncontrado = await User.findOne(id);
+    } catch (e) {
+        throw Error("Error buscan el user: " + e.message)
+    }
+
+    let hashedPassword = bcrypt.hashSync(user.password, 8);
+    userEncontrado.name = user.name
+    userEncontrado.email = user.email
+    userEncontrado.password = hashedPassword
+    userEncontrado.telefono = user.telefono
+    userEncontrado.idFoto =  user.idFoto
+    userEncontrado.recetas = user.recetas
+    userEncontrado.date = new Date()
+    try {
+        let savedUser = await userEncontrado.save()
+        return savedUser;
+    } catch (e) {
+        throw Error("Error guardando el user: " + e.message);
+    }
+}
+
+exports.findUserByEmail = async (email) => {
+    try{
+        let user = await User.findOne({"email": email});
+        return user;
+    }
+    catch(err){
+        throw Error("Error al buscar user por email: " + e.message);
+    }
+}
+
+exports.updateUserToken = async (user,token) => {
+    try{
+        let id = user._id.valueOf();
+        user.token = token;
+        const updateUserAction = await User.updateOne({"_id":id},user);
+        return updateUserAction;
+    }catch(err){
+        console.log("Error: " + err);
+        throw Error("Error al actualizar token del usuario")
+    }
+}
+
+exports.sendEmail = async (email,token) => {
+    try{
+        let transporter = nodemailer.createTransport({
+            host: "smtp-mail.outlook.com", // hostname
+            port: 587, // port for secure SMTP
+            secureConnection: false,
+            tls: {
+                ciphers: 'SSLv3'
+            },
+            auth: {
+                user: config.EMAIL_USER,
+                pass: config.EMAIL_PASSWORD
+            }
+       });
+        let clickThroughUrl = "http://localhost:3000/reset?uuid="+ token;
+        var mailOptions = {
+            from: 'Gourmetic',
+            to: email,
+            subject: 'Recuperación de Cuenta',
+            text: 'Ingrese al siguiente link para recuperar su clave: ' + clickThroughUrl
+        };
+        transporter.sendMail(mailOptions, async function (error, info) {
+            if (error) {
+                throw Error("Error durante el envío del email: " + error.message);
+            } else {
+                console.log("Email enviado correctamente")
+                return info;
+            }
+       });
+    }
+    catch(err){
+        throw Error("Ocurrió un error al enviar email: " + error.message);
+    }
+}
+
+exports.findUserWithToken = async (token) => {
+    try{
+        let user = await User.findOne({"token": token})
+        return user;
+    }catch(err){
+        throw Error("Error al buscar usuario durante validación del token")
+    }
+}
+
+exports.updateUserPassword = async (user,password) => {
+    try{
+        let id = user._id.valueOf();
+        user.token = "";
+        user.password = bcrypt.hashSync(password, 8);
+        let updateAction = await User.updateOne({"_id": id},user)
+        return updateAction;
+    }catch(err){
+        throw Error("Error al actualizar la contraseña del usuario")
     }
 }

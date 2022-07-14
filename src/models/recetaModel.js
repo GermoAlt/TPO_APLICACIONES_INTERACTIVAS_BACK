@@ -3,7 +3,6 @@ const mongoosePaginate = require('mongoose-paginate');
 
 
 const RecetaSchema = new mongoose.Schema({
-    id: Number,
     autor: {
         id: Number,
         nombre:String,
@@ -28,6 +27,7 @@ const RecetaSchema = new mongoose.Schema({
         paso: String
     }],
     date: Date,
+    rating: Array,
     estado: String
 });
 

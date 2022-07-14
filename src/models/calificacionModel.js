@@ -3,7 +3,6 @@ const mongoosePaginate = require('mongoose-paginate');
 
 
 const CalificacionSchema = new mongoose.Schema({
-    idCalificacion: Number,
     idReceta: Number,
     datosUsuario: {
         idUsuario: Number,
