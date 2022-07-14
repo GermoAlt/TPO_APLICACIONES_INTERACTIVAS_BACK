@@ -3,7 +3,6 @@ const mongoosePaginate = require('mongoose-paginate');
 
 
 const UserSchema = new mongoose.Schema({
-    id: Number,
     nombre: String,
     email: String,
     password: String,

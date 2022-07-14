@@ -3,7 +3,6 @@ const mongoosePaginate = require('mongoose-paginate');
 
 
 const RecetaSchema = new mongoose.Schema({
-    id: Number,
     autor: {
         id: Number,
         nombre:String,

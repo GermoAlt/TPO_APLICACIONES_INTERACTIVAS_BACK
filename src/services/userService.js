@@ -30,8 +30,8 @@ exports.login = async function (user) {
 
         let token = jwt.sign({
             id: detailsUser._id
-        }, process.env.SECRET, {
-            expiresIn: 10
+        }, config.SECRET, {
+            expiresIn: '1h'
         });
         return {token:token, user:detailsUser};
     } catch (e) {
@@ -52,10 +52,11 @@ exports.nuevoUser = async function (user) {
 
     try {
         const savedUser = await newUser.save();
+        console.log("usuario creado: ", savedUser);
         const token = jwt.sign({
             id: savedUser._id
-        }, process.env.SECRET, {
-            expiresIn: 10
+        }, config.SECRET, {
+            expiresIn: '1h'
         });
         return token;
     } catch (e) {
@@ -86,7 +87,6 @@ exports.updateUser = async function (user) {
         var userEncontrado = await User.findOne(id);
     } catch (e) {
         throw Error("Error buscan el user: " + e.message)
-        return false;
     }
 
     let hashedPassword = bcrypt.hashSync(user.password, 8);
@@ -117,7 +117,9 @@ exports.findUserByEmail = async (email) => {
 
 exports.updateUserToken = async (user,token) => {
     try{
-        const updateUserAction = await User.updateOne({"_id":user._id},{...user,"token":token});
+        let id = user._id.valueOf();
+        user.token = token;
+        const updateUserAction = await User.updateOne({"_id":id},user);
         return updateUserAction;
     }catch(err){
         console.log("Error: " + err);
@@ -171,7 +173,10 @@ exports.findUserWithToken = async (token) => {
 
 exports.updateUserPassword = async (user,password) => {
     try{
-        let updateAction = await User.updateOne({"_id": user._id},{...user,"token":"","password":password})
+        let id = user._id.valueOf();
+        user.token = "";
+        user.password = bcrypt.hashSync(password, 8);
+        let updateAction = await User.updateOne({"_id": id},user)
         return updateAction;
     }catch(err){
         throw Error("Error al actualizar la contraseña del usuario")
