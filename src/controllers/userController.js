@@ -17,17 +17,19 @@ exports.testPepe = async function (req, res){
 
 exports.nuevoUser = async function (req, res) {
     const User = {
-        nombre: req.body.nombre ? req.body.nombre : null,
-        email: req.body.email ? req.body.email : null,
-        password: req.body.password ? req.body.password : null,
-        telefono: req.body.telefono ? req.body.telefono :null,
-        idFoto: req.body.idFoto ? req.body.idFoto : null,
-        token: req.body.token ? req.body.token : null,
+        nombre: req.body.user.nombre ? req.body.user.nombre : null,
+        email: req.body.user.email ? req.body.user.email : null,
+        password: req.body.user.password ? req.body.user.password : null,
+        telefono: req.body.user.telefono ? req.body.user.telefono :null,
+        idFoto: req.body.user.idFoto ? req.body.user.idFoto : null,
+        token: req.body.user.token ? req.body.user.token : null,
         recetas: [],
     };
     try {
         const createdUser = await UserService.nuevoUser(User);
-        return res.status(201).json({createdUser, message: "Se creó el usuario: " + User.email});
+        User.password = null
+        User.id = createdUser.id
+        return res.status(201).json({createdUser, message: "Se creó el usuario: " + User.email, user: User});
     } catch (e) {
         console.log("Error: " + e);
         return res.status(400).json({status: 400, message: "Falló la creación de usuario"});

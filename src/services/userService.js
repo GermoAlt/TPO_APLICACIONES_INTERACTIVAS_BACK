@@ -58,7 +58,7 @@ exports.nuevoUser = async function (user) {
         }, config.SECRET, {
             expiresIn: '1h'
         });
-        return token;
+        return {token: token, id: savedUser._id};
     } catch (e) {
         console.log(e)
         throw Error("Error creando nuevo user")
