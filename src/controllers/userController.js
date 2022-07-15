@@ -17,7 +17,7 @@ exports.nuevoUser = async function (req, res) {
         return res.status(201).json({createdUser, message: "Se creó el usuario: " + User.email, user: User});
     } catch (e) {
         console.log("Error: " + e);
-        return res.status(400).json({status: 400, message: "Falló la creación de usuario"});
+        return res.status(409).json({status: 400, message: "Ya existe un usuario con este mail"});
     }
 }
 

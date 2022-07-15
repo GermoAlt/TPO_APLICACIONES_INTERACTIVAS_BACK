@@ -5,20 +5,6 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const config = require('../config/env.config.js')
 
-exports.crearPrueba = async function (prueba){
-    const newPrueba = new Prueba({
-        name: prueba.name,
-        detalle: prueba.detalle,
-        date: new Date()
-    });
-    try {
-        const guardarPrueba = await newPrueba.save();
-    }catch (e){
-        console.log(e)
-        throw Error(e.getError())
-    }
-}
-
 exports.login = async function (user) {
     return await loginUser(user)
 }
@@ -45,6 +31,10 @@ async function loginUser(user) {
 
 exports.nuevoUser = async function (user) {
     const hashedPassword = bcrypt.hashSync(user.password, 8);
+    const userExistente = await User.exists({"email": user.email});
+    if(userExistente) {
+        throw Error("Este mail ya tiene un usuario registrado")
+    }
 
     const newUser = new User({
         nombre: user.nombre,
