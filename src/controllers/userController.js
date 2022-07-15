@@ -1,20 +1,5 @@
 const UserService = require('../services/userService');
 
-exports.testPepe = async function (req, res){
-    const Prueba = {
-        name: req.body.name,
-        detalle: req.body.detalle
-    };
-    try{
-        const createdPrueba = await UserService.crearPrueba(Prueba);
-        return res.status(200).json({message:"Post ok"})
-    }catch (e){
-        console.log(e)
-        return  res.status(401).json({status: 400, message:"Error con db"})
-    }
-
-}
-
 exports.nuevoUser = async function (req, res) {
     const User = {
         nombre: req.body.user.nombre ? req.body.user.nombre : null,
@@ -28,7 +13,7 @@ exports.nuevoUser = async function (req, res) {
     try {
         const createdUser = await UserService.nuevoUser(User);
         User.password = null
-        User.id = createdUser.id
+        User._id = createdUser.id
         return res.status(201).json({createdUser, message: "Se creó el usuario: " + User.email, user: User});
     } catch (e) {
         console.log("Error: " + e);

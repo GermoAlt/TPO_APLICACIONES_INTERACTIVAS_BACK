@@ -51,3 +51,12 @@ exports.updateCalificacion = async (id,nuevaCalificacion) => {
     }
 
 }
+
+exports.findReviewsByRecipe = async(id) => {
+    try {
+        return await Calificacion.find({"idReceta":id})
+    }catch(e){
+        console.log("Error: " + e.message);
+        throw Error("Error al obtener calificaciones de receta " + id)
+    }
+}

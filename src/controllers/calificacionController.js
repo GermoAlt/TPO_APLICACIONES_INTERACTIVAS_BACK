@@ -26,6 +26,16 @@ exports.getCalificacionById = async (req,res) => {
     }
 }
 
+exports.getCalificacionesByReceta = async (req, res) => {
+    try {
+        const calificaciones = await CalificacionService.findReviewsByRecipe(req.params.id)
+        return res.status(200).json({"calificaciones": calificaciones});
+    } catch (e) {
+        console.log("Error: " + e.message);
+        return res.status(400).json({status: 400, message: "Error al obtener calificaciones"});
+    }
+}
+
 exports.getCalificacionByUser = async (req,res) => {
     try {
         const calificaciones = await CalificacionService.findCalificacionesByUserId(req.params.userId);
@@ -40,14 +50,14 @@ exports.createCalificacion = async (req,res) => {
     try {
         const Calificacion = {
             idReceta: req.body.idReceta,
-            datosUsuario: {
-                idUsuario: req.body.idUsuario,
-                nombre: req.body.nombre,
-                email: req.body.email,
-                telefono: req.body.telefono,
-                idFoto: req.body.idFoto
+            autor: {
+                _id: req.body.autor._id,
+                nombre: req.body.autor.nombre,
+                email: req.body.autor.email,
+                telefono: req.body.autor.telefono,
+                idFoto: req.body.autor.idFoto
             },
-            puntacion: req.body.puntacion,
+            puntuacion: req.body.puntuacion,
             comentario: req.body.comentario
         };
         const createdCalificacion = await CalificacionService.nuevaCalificacion(Calificacion);

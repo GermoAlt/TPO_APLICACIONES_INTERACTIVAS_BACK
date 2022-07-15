@@ -3,15 +3,15 @@ const mongoosePaginate = require('mongoose-paginate');
 
 
 const CalificacionSchema = new mongoose.Schema({
-    idReceta: Number,
-    datosUsuario: {
-        idUsuario: Number,
+    idReceta: String,
+    autor: {
+        _id: String,
         nombre: String,
         email: String,
         telefono: String,
         idFoto: String
     },
-    puntacion: Number,
+    puntuacion: Number,
     comentario: String
 })
 

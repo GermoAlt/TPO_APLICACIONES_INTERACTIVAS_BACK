@@ -9,7 +9,6 @@ const jwtValidation = require('../../auth/jwtValidation')
 router.get('/test',function(req, res) {
     res.send('Test users ok');
 })
-router.post('/test-post', jwtValidation.checkToken, UserController.testPepe)
 
 router.post('/login', UserController.login)
 router.post('/registration', UserController.nuevoUser)
@@ -19,13 +18,6 @@ router.put('/update', UserController.updateUser) // add jwtValidation.checkToken
 router.post('/reset', UserController.reset);
 router.post('/usertoken', UserController.validateUserToken)
 router.post('/password', UserController.updatePassword)
-
-//continuar con guardar imagen de usuario y enviar email de reset password.
-
-// router.post('/guardarImgUser',UserController.guardarImagenUser)
-// router.post('/uploadImg',UploadController.uploadFilesImgUser);
-// router.post('/imgUserByMail',Authorization,UserController.getImagenUserByMail)
-// router.post('/sendEmail',MailController.sendEmail)
 
 
 module.exports = router;

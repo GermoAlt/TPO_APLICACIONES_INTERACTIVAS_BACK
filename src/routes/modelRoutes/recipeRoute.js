@@ -3,11 +3,6 @@ const router = express.Router();
 const RecipeController = require('../../controllers/recipeController');
 const jwtValidation = require('../../auth/jwtValidation')
 
-
-router.get('/test',function(req, res) {
-    res.send('Test recipes ok');
-})
-
 // This routes will be appended to "http://localhost:3600/recipes"
 
 router.get('/recipes', RecipeController.getRecipes)
