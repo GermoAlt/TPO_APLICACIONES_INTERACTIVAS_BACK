@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    <img src="https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_FRONT/blob/prueba-readme/src/logo.svg?raw=true" alt="gourmetic" width="250">
+    <img src="https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_FRONT/blob/prueba-readme/src/logo.svg?raw=true" alt="gourmetic" width="250"/>
 </h1>
 
 
@@ -10,7 +10,8 @@
   <a href="#requisitos">Requisitos</a> •
   <a href="#instalación">Instalación</a> •
   <a href="#configuración">Configuración</a> •
-  <a href="#mondoDB">MondoDB</a>
+  <a href="#mongoDB">MongoDB</a>
+  <a href="#equipo-de-trabajo">Equipo de trabajo</a>
 </p>
 
 ## Introducción
@@ -27,6 +28,7 @@
 - [ Node.js v14 o superior ](https://nodejs.org/en/download/)
 - [ npm v7 o superior ](https://github.blog/2020-10-13-presenting-v7-0-0-of-the-npm-cli/)
 - [ Git ](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/)
+
 
 ## Instalación
 
@@ -63,8 +65,20 @@ Tiene integración con [Cloudinary](https://cloudinary.com/) para subir las imá
     "API_SECRET": "Replace with Cloudinary Secret Key"
 ```
 
-## MondoDB
+## MongoDB
 
-grafico
+![img.png](img.png)
 
-##
+## Equipo de trabajo
+* Aplicaciones interactivas
+* Grupo 4
+
+<table>
+  <tr>
+    <td align="center"><sub><b>German Altairac</b></sub><br /><sub>1084200</sub><br/><a>💻</a> </td>
+    <td align="center"><sub><b>Tobias Kleppe</b></sub><br /><sub>1130666</sub><br/><a>💻</a></td>
+    <td align="center"><sub><b>Belen Enriquez</b></sub><br /><sub>1092598</sub><br/><a>💻</a></td>
+  </tr>
+</table>
+
+> UADE - Licenciatura en gestión de tecnologías de la información - 2022
