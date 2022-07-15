@@ -1,5 +1,4 @@
 <h1 align="center">
-  <br>
     <img src="https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_FRONT/blob/prueba-readme/src/logo.svg?raw=true" alt="gourmetic" width="250"/>
 </h1>
 
@@ -10,7 +9,7 @@
   <a href="#requisitos">Requisitos</a> •
   <a href="#instalación">Instalación</a> •
   <a href="#configuración">Configuración</a> •
-  <a href="#mongoDB">MongoDB</a>
+  <a href="#mongoDB">MongoDB</a> •
   <a href="#equipo-de-trabajo">Equipo de trabajo</a>
 </p>
 
@@ -65,6 +64,14 @@ Tiene integración con [Cloudinary](https://cloudinary.com/) para subir las imá
     "API_SECRET": "Replace with Cloudinary Secret Key"
 ```
 
+### Envío de emails
+Se debe tener configurada una casilla de email para resetear la contraseña.
+* Los datos de configuración se encuentran en `env.config.js`:
+```jsx
+    "EMAIL_USER": "Replace with email address",
+    "EMAIL_PASSWORD": "Replace with email password" 
+```
+
 ## MongoDB
 
 ![img.png](img.png)
@@ -72,6 +79,7 @@ Tiene integración con [Cloudinary](https://cloudinary.com/) para subir las imá
 ## Equipo de trabajo
 * Aplicaciones interactivas
 * Grupo 4
+* 
 
 <table>
   <tr>
