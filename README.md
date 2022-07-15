@@ -36,12 +36,12 @@ Para clonar y ejecutar esta aplicación, necesitará [Git](https://git-scm.com) 
 ```bash
 # Clone this repository
 $ git clone https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_BACK.git
-# Go into the repository
-$ cd 
+
 # Install dependencies
 $ npm install
+
 # Run the app
-$ 
+$ npm start
 ```
 
 ## Configuración
@@ -83,7 +83,7 @@ Se debe tener configurada una casilla de email para resetear la contraseña.
 
 <table>
   <tr>
-    <td align="center"><sub><b>German Altairac</b></sub><br /><sub>1084200</sub><br/><a>💻</a> </td>
+    <td align="center"><sub><b>German Altairac</b></sub><br /><sub>1084200</sub><br/><a>💻</a></td>
     <td align="center"><sub><b>Tobias Kleppe</b></sub><br /><sub>1130666</sub><br/><a>💻</a></td>
     <td align="center"><sub><b>Belen Enriquez</b></sub><br /><sub>1092598</sub><br/><a>💻</a></td>
   </tr>
