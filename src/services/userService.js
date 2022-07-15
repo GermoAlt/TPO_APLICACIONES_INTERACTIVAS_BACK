@@ -134,7 +134,7 @@ exports.sendEmail = async (email,token) => {
                 pass: config.EMAIL_PASSWORD
             }
        });
-        let clickThroughUrl = "http://localhost:3000/reset?uuid="+ token;
+        let clickThroughUrl = "http://"+config.HOST+":"+config.port+"/reset?uuid="+ token;
         var mailOptions = {
             from: 'Gourmetic',
             to: email,
