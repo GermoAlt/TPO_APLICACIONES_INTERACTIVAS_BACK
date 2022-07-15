@@ -60,8 +60,8 @@ exports.getUserById = async function (req, res) {
 }
 
 exports.updateUser = async function (req, res) {
-    if (!req.body.nombre) {
-        return res.status(400).json({status: 400., message: "Name be present"})
+    if (!req.body.email) {
+        return res.status(400).json({status: 400, message: "Email must be present"})
     }
     let User = {
         nombre: req.body.nombre ? req.body.nombre : null,
@@ -76,22 +76,19 @@ exports.updateUser = async function (req, res) {
         let updatedUser = await UserService.updateUser(User)
             return res.status(200).json({status: 200, data: updatedUser, message: "Usuario actualizado correctamente"})
     } catch (e) {
-        return res.status(400).json({status: 400., message: e.message})
+        return res.status(400).json({status: 400, message: e.message})
     }
 }
 
 exports.reset = async (req,res) => { // received email => checks for existace, saves token, and sends mail
     try {
         const targetUser = await UserService.findUserByEmail(req.body.email);
-        /*if(targetUser === {}){
-            return res.status(404).json({status: 404, message: "No se encontró al usuario"});
-        }*/
         if(!targetUser){
             return res.status(200).json({status: 200, message: "Request aceptada, pero no inmuta al sistema"});
         }
-        const updatedTokenAction = await UserService.updateUserToken(targetUser,req.body.token)
-        const emailActionInfo = await UserService.sendEmail(req.body.email,req.body.token)
-        return res.status(200).json({targetUser,emailActionInfo, message: "Se envio el mail al usuario: " + targetUser.email});
+        await UserService.updateUserToken(targetUser,req.body.token)
+        await UserService.sendEmail(req.body.email,req.body.token)
+        return res.status(200).json({message: "Se envio el mail al usuario: " + targetUser.email});
     } catch (e) {
         console.log("Error: ", e);
         return res.status(400).json({status: 400, message: "Falló la recuperación de usuario"});
@@ -117,8 +114,8 @@ exports.updatePassword = async (req,res) => { // Updates user password, sets tok
         if(!user){
             return res.status(401).json({message: "No se encontró al usuario con token " + req.body.token});
         }
-        let updateAction = await UserService.updateUserPassword(user,req.body.password);
-        return res.status(200).json({updateAction, message: "Contraseña actualizada con éxito"});
+        user = await UserService.updateUserPassword(user,req.body.password);
+        return res.status(200).json({user, message: "Contraseña actualizada con éxito"});
     }catch(err){
         console.log("Error: ", err);
         return res.status(400).json({status: 400, message: "Falló la autenticación del token (uuid: " + req.body.token + ")"});
