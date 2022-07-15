@@ -20,6 +20,10 @@ exports.crearPrueba = async function (prueba){
 }
 
 exports.login = async function (user) {
+    return await loginUser(user)
+}
+
+async function loginUser(user) {
     try {
         console.log("login:",user)
         const detailsUser = await User.findOne({
@@ -37,7 +41,6 @@ exports.login = async function (user) {
     } catch (e) {
         throw Error("Error login user")
     }
-
 }
 
 exports.nuevoUser = async function (user) {
@@ -47,7 +50,9 @@ exports.nuevoUser = async function (user) {
         nombre: user.nombre,
         email: user.email,
         date: new Date(),
-        password: hashedPassword
+        password: hashedPassword,
+        telefono: user.telefono,
+        idFoto: user.idFoto
     });
 
     try {
@@ -89,10 +94,8 @@ exports.updateUser = async function (user) {
         throw Error("Error buscan el user: " + e.message)
     }
 
-    let hashedPassword = bcrypt.hashSync(user.password, 8);
-    userEncontrado.name = user.name
-    userEncontrado.email = user.email
-    userEncontrado.password = hashedPassword
+    if(user.password) userEncontrado.password = bcrypt.hashSync(user.password, 8)
+    userEncontrado.nombre = user.nombre
     userEncontrado.telefono = user.telefono
     userEncontrado.idFoto =  user.idFoto
     userEncontrado.recetas = user.recetas
@@ -176,8 +179,9 @@ exports.updateUserPassword = async (user,password) => {
         let id = user._id.valueOf();
         user.token = "";
         user.password = bcrypt.hashSync(password, 8);
-        let updateAction = await User.updateOne({"_id": id},user)
-        return updateAction;
+        await User.updateOne({"_id": id},user)
+        user.password = password
+        return loginUser(user);
     }catch(err){
         throw Error("Error al actualizar la contraseña del usuario")
     }
