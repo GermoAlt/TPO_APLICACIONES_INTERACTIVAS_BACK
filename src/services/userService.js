@@ -31,7 +31,7 @@ exports.login = async function (user) {
         let token = jwt.sign({
             id: detailsUser._id
         }, config.SECRET, {
-            expiresIn: '1h'
+            expiresIn: 10000
         });
         return {token:token, user:detailsUser};
     } catch (e) {
@@ -56,7 +56,7 @@ exports.nuevoUser = async function (user) {
         const token = jwt.sign({
             id: savedUser._id
         }, config.SECRET, {
-            expiresIn: '1h'
+            expiresIn: 10000
         });
         return {token: token, id: savedUser._id};
     } catch (e) {

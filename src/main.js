@@ -13,7 +13,7 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Expose-Headers', 'Content-Length');
     res.header("Access-Control-Allow-Headers", "access-control-allow-origin, Access-Control-Allow-Headers, " +
         "Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, " +
-        "Access-Control-Request-Headers, Authorization, Range");
+        "Access-Control-Request-Headers, Authorization, Range, token");
 
     if (req.method === 'OPTIONS') {
         return res.sendStatus(200);
