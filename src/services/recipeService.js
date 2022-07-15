@@ -30,7 +30,7 @@ exports.findRecipeById = async (id) => {
 
 exports.findRecipeByUserId = async (userId) => {
     try{
-        const recipes = await Recipe.find({"autor.id":userId});
+        const recipes = await Recipe.find({"autor._id":userId});
         return recipes;
     }catch(err){
         console.log("Error: " + err);
@@ -44,6 +44,7 @@ exports.newRecipe = async (recipe) => {
             ...recipe,
             date: new Date(),
         });
+        console.log("newRecipe: ", newRecipe);
         let savedRecipe = await newRecipe.save()
         return savedRecipe;
     }

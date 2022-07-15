@@ -4,7 +4,7 @@ const mongoosePaginate = require('mongoose-paginate');
 
 const RecetaSchema = new mongoose.Schema({
     autor: {
-        id: Number,
+        _id: String,
         nombre:String,
         email:String,
         idFoto:String,
