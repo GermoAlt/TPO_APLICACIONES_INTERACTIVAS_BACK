@@ -15,7 +15,7 @@
 
 ## Introducción
 **Gourmetic** es una aplicación web responsive para la gestión de recetas. Se divide en una parte frontend y otra backend.
-* Este README corresponde al backend, el correspondiente al frontend se puede encontrar [acá](https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_FRONT/blob/prueba-readme/README.md).
+* Este README corresponde al backend, el correspondiente al frontend se puede encontrar [acá](https://github.com/GermoAlt/TPO_APLICACIONES_INTERACTIVAS_FRONT/blob/main/README.md).
 
 ## Información general
 * El backend de **Gourmetic** está desarrollado con API REST NodeJS.
