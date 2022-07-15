@@ -79,8 +79,6 @@ Se debe tener configurada una casilla de email para resetear la contraseña.
 ## Equipo de trabajo
 * Aplicaciones interactivas
 * Grupo 4
-* 
-
 <table>
   <tr>
     <td align="center"><sub><b>German Altairac</b></sub><br /><sub>1084200</sub><br/><a>💻</a></td>
