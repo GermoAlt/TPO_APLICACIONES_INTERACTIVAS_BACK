@@ -10,8 +10,7 @@ cloudinary.config({ // Add cloudinary keys locally to config file
 
 exports.listRecipes = async () => {
     try{
-        const recipes = await Recipe.find({"estado":"Publicada"});
-        return recipes;
+        return await Recipe.find({"estado": "Publicada"});
     }catch(err){
         console.log("Error: " + err);
         throw Error("Error al obtener recetas")
@@ -20,8 +19,7 @@ exports.listRecipes = async () => {
 
 exports.findRecipeById = async (id) => {
     try{
-        const recipes = await Recipe.findOne({"_id":id});
-        return recipes;
+        return await Recipe.findOne({"_id": id});
     }catch(err){
         console.log("Error: " + err);
         throw Error("Error al obtener receta por id")
@@ -30,8 +28,7 @@ exports.findRecipeById = async (id) => {
 
 exports.findRecipeByUserId = async (userId) => {
     try{
-        const recipes = await Recipe.find({"autor._id":userId});
-        return recipes;
+        return await Recipe.find({"autor._id": userId});
     }catch(err){
         console.log("Error: " + err);
         throw Error("Error al obtener recetas por usuario")
@@ -45,8 +42,7 @@ exports.newRecipe = async (recipe) => {
             date: new Date(),
         });
         console.log("newRecipe: ", newRecipe);
-        let savedRecipe = await newRecipe.save()
-        return savedRecipe;
+        return await newRecipe.save();
     }
     catch(err){
         console.log("Error: " + err);
@@ -56,8 +52,7 @@ exports.newRecipe = async (recipe) => {
 
 exports.updateRecipe = async (id,newRecipe) => {
     try{
-        const recipe = await Recipe.updateOne({"_id":id},newRecipe);
-        return recipe;
+        return await Recipe.updateOne({"_id": id}, newRecipe);
     }catch(err){
         console.log("Error: " + err);
         throw Error("Error al actualizar recetas")
@@ -66,8 +61,7 @@ exports.updateRecipe = async (id,newRecipe) => {
 
 exports.deleteRecipe = async (id) => {
     try{
-        const recipe = await Recipe.remove({"_id":id});
-        return recipe;
+        return await Recipe.remove({"_id": id});
     }catch(err){
         console.log("Error: " + err);
         throw Error("Error al actualizar recetas")
@@ -76,13 +70,12 @@ exports.deleteRecipe = async (id) => {
 
 exports.newImage = async (uploadStr) => {
     try{
-        let uploadResult = await cloudinary.v2.uploader.upload(uploadStr, {
+        return await cloudinary.v2.uploader.upload(uploadStr, {
             folder: 'recetas/receta',
             overwrite: true,
             invalidate: true,
             width: 965, height: 643, crop: "fill"
-        })
-        return uploadResult;
+        });
     }
     catch(err){
         console.log("Error: " + err);
