@@ -6,10 +6,6 @@ const jwtValidation = require('../../auth/jwtValidation')
 
 // This routes will be appended to "http://localhost:3600/users"
 
-router.get('/test',function(req, res) {
-    res.send('Test users ok');
-})
-
 router.post('/login', UserController.login)
 router.post('/registration', UserController.nuevoUser)
 router.get('/userById/:id', UserController.getUserById)

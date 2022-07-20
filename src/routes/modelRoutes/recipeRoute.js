@@ -12,6 +12,5 @@ router.post('/recipe', jwtValidation.checkToken, RecipeController.createRecipe)
 router.put('/recipe/:id', jwtValidation.checkToken, RecipeController.updateRecipe)
 router.delete('/recipe/:id', jwtValidation.checkToken, RecipeController.deleteRecipe)
 
-//router.post('/recipeImage', jwtValidation.checkToken, RecipeController.uploadImage)
 
 module.exports = router;

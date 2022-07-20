@@ -55,14 +55,6 @@ Para la persistencia de datos se utiliza [MongoDB](https://www.mongodb.com/es) c
     "PORTDB":27017,
     "DATABASE": "recetas",
 ```
-### Cloudinary
-Tiene integración con [Cloudinary](https://cloudinary.com/) para subir las imágenes que se cargan en las recetas. Se deberá contar con una cuenta.
-* Los datos de configuración se encuentran en `env.config.js`:
-```jsx
-    "CLOUD_NAME": "Replace with Cloudinary Cloud Name",
-    "API_KEY": "Replace with Cloudinary API Key",
-    "API_SECRET": "Replace with Cloudinary Secret Key"
-```
 
 ### Envío de emails
 Se debe tener configurada una casilla de email para resetear la contraseña.

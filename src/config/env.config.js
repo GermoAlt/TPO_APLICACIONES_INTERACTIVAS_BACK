@@ -14,9 +14,6 @@ module.exports = {
     "DATABASE": "recetas",
 
     "SECRET":"secret",
-    "CLOUD_NAME": "Replace with Cloudinary Cloud Name",
-    "API_KEY": "Replace with Cloudinary API Key",
-    "API_SECRET": "Replace with Cloudinary Secret Key",
     "EMAIL_USER": "Replace with email address",
-    "EMAIL_PASSWORD": "Replace with email password" 
+    "EMAIL_PASSWORD": "Replace with email password"
 };

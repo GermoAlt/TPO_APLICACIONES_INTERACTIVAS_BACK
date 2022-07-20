@@ -73,24 +73,3 @@ exports.deleteRecipe = async (req,res) => {
         return res.status(400).json({status: 400, message: "Error al eliminar receta"});
     }
 }
-
-exports.uploadImage = async (req,res) => {
-    try {
-        var dataURI = req.body.dataURI;
-        var uploadStr = 'data:image/jpeg;base64,' + dataURI;
-
-        let result = await RecipeService.newImage(uploadStr)
-        res.status(200).json({
-            urlFoto: result.url,
-            extension: result.format,
-            message: "Imagen subida a cloudinary con éxito"
-        })
-    }
-    catch(err) {
-        console.log("Error: ", err)
-        res.status(400).json({
-            status: 400,
-            message: 'Error al subir imagen a cloudinary',
-        })
-    }
-}

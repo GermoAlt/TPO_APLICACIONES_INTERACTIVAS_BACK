@@ -1,12 +1,5 @@
 const Recipe = require('../models/recetaModel');
-const cloudinary = require('cloudinary')
-const config = require('../config/env.config');
 
-cloudinary.config({ // Add cloudinary keys locally to config file
-    cloud_name: config.CLOUD_NAME,
-    api_key: config.API_KEY,
-    api_secret: config.API_SECRET
-})
 
 exports.listRecipes = async () => {
     try{
@@ -65,20 +58,5 @@ exports.deleteRecipe = async (id) => {
     }catch(err){
         console.log("Error: " + err);
         throw Error("Error al actualizar recetas")
-    }
-}
-
-exports.newImage = async (uploadStr) => {
-    try{
-        return await cloudinary.v2.uploader.upload(uploadStr, {
-            folder: 'recetas/receta',
-            overwrite: true,
-            invalidate: true,
-            width: 965, height: 643, crop: "fill"
-        });
-    }
-    catch(err){
-        console.log("Error: " + err);
-        throw Error("Error al subir imagen a cloudinary")
     }
 }
